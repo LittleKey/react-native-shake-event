@@ -1,11 +1,11 @@
 {
-  "name": "react-native-shake-event",
+  "name": "react-native-shake-event-by-littlekey",
   "version": "2.1.0",
-  "description": "Add shake event to your React Native app",
+  "description": "[fork] Add shake event to your React Native app",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/jadsonlourenco/react-native-shake-event.git"
+    "url": "git+https://github.com/littlekey/react-native-shake-event.git"
   },
   "keywords": [
     "android",
@@ -20,13 +20,16 @@
     "shake-event-android",
     "shake-event-ios"
   ],
-  "author": "Jadson Lourenco <jadsonlourenco@gmail.com>",
+  "author": "littlekey <littlekeyrain@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jadsonlourenco/react-native-shake-event/issues"
+    "url": "https://github.com/littlekey/react-native-shake-event/issues"
   },
-  "homepage": "https://github.com/jadsonlourenco/react-native-shake-event",
+  "homepage": "https://github.com/littlkey/react-native-shake-event",
   "dependencies": {
     "invariant": "^2.2.x"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   }
 }
