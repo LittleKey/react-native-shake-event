@@ -1,5 +1,13 @@
 #import <React/RCTBridgeModule.h>
+#import <React/RCTBridge.h>
+#import <React/RCTEventDispatcher.h>
+#import <React/RCTLog.h>
+#import <React/RCTUtils.h>
 
-@interface RNShakeEvent : NSObject <RCTBridgeModule>
+#import <CoreMotion/CoreMotion.h>
+
+@interface RNShakeEvent : NSObject <RCTBridgeModule> {
+    CMMotionManager *_motionManager;
+}
 
 @end
