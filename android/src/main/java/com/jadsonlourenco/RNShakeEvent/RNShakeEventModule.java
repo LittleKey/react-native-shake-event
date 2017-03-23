@@ -19,7 +19,7 @@ public class RNShakeEventModule extends ReactContextBaseJavaModule implements Sh
         super(reactContext);
         SensorManager sensorManager = (SensorManager) reactContext.getSystemService(Context.SENSOR_SERVICE);
         ShakeDetector shakeDetector = new ShakeDetector(this);
-        shakeDetector.setSensitivity(30);
+        shakeDetector.setSensitivity(35);
         shakeDetector.start(sensorManager);
     }
 
