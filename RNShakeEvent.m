@@ -41,14 +41,13 @@ RCT_EXPORT_MODULE();
                 RCTLogInfo(@"Accelerometer active");
             } else {
                 RCTLogInfo(@"Accelerometer not active");
-                [self->_motionManager startAccelerometerUpdates];
             }
         }
         else
         {
             RCTLogInfo(@"Accelerometer not Available!");
         }
-        [self->_motionManager setAccelerometerUpdateInterval:500];
+        [self->_motionManager setAccelerometerUpdateInterval:0.1];
         RCTLogInfo(@"RNShakeEvent: started in debug mode");
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(motionEnded:)
@@ -61,7 +60,10 @@ RCT_EXPORT_MODULE();
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self->_motionManager stopAccelerometerUpdates];
+    if([self->_motionManager isAccelerometerActive] == YES)
+    {
+        [self->_motionManager stopAccelerometerUpdates];
+    }
 }
 
 - (void)motionEnded:(NSNotification *)notification
@@ -78,6 +80,9 @@ RCT_EXPORT_MODULE();
          RCTLogInfo(@"startAccelerometerUpdates: %f, %f, %f, %f", x, y, z, timestamp);
      }];
      */
+    if ([self->_motionManager isAccelerometerActive] == NO) {
+        [self->_motionManager startAccelerometerUpdates];
+    }
     double x = self->_motionManager.accelerometerData.acceleration.x;
     double y = self->_motionManager.accelerometerData.acceleration.y;
     double z = self->_motionManager.accelerometerData.acceleration.z;
@@ -87,7 +92,11 @@ RCT_EXPORT_MODULE();
     if (x * x + y * y + z * z >= threshold * threshold)
     {
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
-                                                body:nil];
+                                                    body:nil];
+        if ([self->_motionManager isAccelerometerActive] == YES)
+        {
+            [self->_motionManager stopAccelerometerUpdates];
+        }
     }
 }
 
@@ -115,14 +124,13 @@ RCT_EXPORT_MODULE();
                 RCTLogInfo(@"Accelerometer active");
             } else {
                 RCTLogInfo(@"Accelerometer not active");
-                [self->_motionManager startAccelerometerUpdates];
             }
         }
         else
         {
             RCTLogInfo(@"Accelerometer not Available!");
         }
-        [self->_motionManager setAccelerometerUpdateInterval:500];
+        [self->_motionManager setAccelerometerUpdateInterval:0.1];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(motionEnded:)
                                                      name:RCTShowDevMenuNotification
@@ -134,11 +142,17 @@ RCT_EXPORT_MODULE();
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [self->_motionManager stopAccelerometerUpdates];
+    if([self->_motionManager isAccelerometerActive] == YES)
+    {
+        [self->_motionManager stopAccelerometerUpdates];
+    }
 }
 
 - (void)motionEnded:(NSNotification *)notification
 {
+    if ([self->_motionManager isAccelerometerActive] == NO) {
+        [self->_motionManager startAccelerometerUpdates];
+    }
     double x = self->_motionManager.accelerometerData.acceleration.x;
     double y = self->_motionManager.accelerometerData.acceleration.y;
     double z = self->_motionManager.accelerometerData.acceleration.z;
@@ -149,6 +163,10 @@ RCT_EXPORT_MODULE();
     {
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
                                                     body:nil];
+        if ([self->_motionManager isAccelerometerActive] == YES)
+        {
+            [self->_motionManager stopAccelerometerUpdates];
+        }
     }
 }
 
