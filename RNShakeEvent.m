@@ -149,6 +149,7 @@ RCT_EXPORT_MODULE();
     double y = self->_motionManager.accelerometerData.acceleration.y;
     double z = self->_motionManager.accelerometerData.acceleration.z;
     double timestamp = self->_motionManager.accelerometerData.timestamp;
+    RCTLogInfo(@"startAccelerometerUpdates: %f, %f, %f, %f", x, y, z, timestamp);
     int threshold = 40;
     if (x * x + y * y + z * z >= threshold * threshold)
     {
