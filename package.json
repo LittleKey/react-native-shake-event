@@ -1,6 +1,6 @@
 {
   "name": "react-native-shake-event-by-littlekey",
-  "version": "2.5.4",
+  "version": "2.5.5",
   "description": "[fork] Add shake event to your React Native app",
   "main": "index.js",
   "repository": {
