@@ -36,4 +36,4 @@ class RNShakeEventIOS {
 };
 
 module.exports = RNShakeEventIOS;
-export defulat RNShakeEventIOS;
+export default RNShakeEventIOS;
