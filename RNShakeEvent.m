@@ -90,7 +90,7 @@ RCT_EXPORT_MODULE();
     double y = self->_motionManager.accelerometerData.acceleration.y;
     double z = self->_motionManager.accelerometerData.acceleration.z;
     double timestamp = self->_motionManager.accelerometerData.timestamp;
-    int threshold = 35;
+    int threshold = 40;
     if (x * x + y * y + z * z >= threshold * threshold)
     {
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
