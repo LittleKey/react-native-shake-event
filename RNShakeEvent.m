@@ -48,6 +48,7 @@ RCT_EXPORT_MODULE();
                 RCTLogInfo(@"Accelerometer active");
             } else {
                 RCTLogInfo(@"Accelerometer not active");
+                [self->_motionManager startAccelerometerUpdates];
             }
         }
         else
@@ -72,8 +73,6 @@ RCT_EXPORT_MODULE();
 
 - (void)motionEnded:(NSNotification *)notification
 {
-    [self->_motionManager startAccelerometerUpdates];
-
     /* Receive the ccelerometer data on this block */
     /*
     [self->_motionManager startAccelerometerUpdatesToQueue:[NSOperationQueue mainQueue]
@@ -111,6 +110,25 @@ RCT_EXPORT_MODULE();
 - (instancetype)init
 {
     if ((self = [super init])) {
+        self->_motionManager = [[CMMotionManager alloc] init];
+        //Accelerometer
+        if([self->_motionManager isAccelerometerAvailable])
+        {
+            RCTLogInfo(@"Accelerometer available");
+            /* Start the accelerometer if it is not active already */
+            if([self->_motionManager isAccelerometerActive] == NO)
+            {
+                RCTLogInfo(@"Accelerometer active");
+            } else {
+                RCTLogInfo(@"Accelerometer not active");
+                [self->_motionManager startAccelerometerUpdates];
+            }
+        }
+        else
+        {
+            RCTLogInfo(@"Accelerometer not Available!");
+        }
+        [self->_motionManager setAccelerometerUpdateInterval:500];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(motionEnded:)
                                                      name:RCTShowDevMenuNotification
@@ -122,12 +140,21 @@ RCT_EXPORT_MODULE();
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self->_motionManager stopAccelerometerUpdates];
 }
 
 - (void)motionEnded:(NSNotification *)notification
 {
-    [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
-                                                body:nil];
+    double x = self->_motionManager.accelerometerData.acceleration.x;
+    double y = self->_motionManager.accelerometerData.acceleration.y;
+    double z = self->_motionManager.accelerometerData.acceleration.z;
+    double timestamp = self->_motionManager.accelerometerData.timestamp;
+    int threshold = 40;
+    if (x * x + y * y + z * z >= threshold * threshold)
+    {
+        [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
+                                                    body:nil];
+    }
 }
 
 @end
