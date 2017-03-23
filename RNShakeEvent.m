@@ -47,7 +47,7 @@ RCT_EXPORT_MODULE();
         {
             RCTLogInfo(@"Accelerometer not Available!");
         }
-        [self->_motionManager setAccelerometerUpdateInterval:0.1];
+        [self->_motionManager setAccelerometerUpdateInterval:1];
         RCTLogInfo(@"RNShakeEvent: started in debug mode");
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(motionEnded:)
@@ -88,7 +88,7 @@ RCT_EXPORT_MODULE();
     double z = self->_motionManager.accelerometerData.acceleration.z;
     double timestamp = self->_motionManager.accelerometerData.timestamp;
     RCTLogInfo(@"startAccelerometerUpdates: %f, %f, %f, %f", x, y, z, timestamp);
-    int threshold = 40;
+    int threshold = 1;
     if (x * x + y * y + z * z >= threshold * threshold)
     {
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
@@ -130,7 +130,7 @@ RCT_EXPORT_MODULE();
         {
             RCTLogInfo(@"Accelerometer not Available!");
         }
-        [self->_motionManager setAccelerometerUpdateInterval:0.1];
+        [self->_motionManager setAccelerometerUpdateInterval:1];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(motionEnded:)
                                                      name:RCTShowDevMenuNotification
@@ -158,7 +158,7 @@ RCT_EXPORT_MODULE();
     double z = self->_motionManager.accelerometerData.acceleration.z;
     double timestamp = self->_motionManager.accelerometerData.timestamp;
     RCTLogInfo(@"startAccelerometerUpdates: %f, %f, %f, %f", x, y, z, timestamp);
-    int threshold = 40;
+    int threshold = 1;
     if (x * x + y * y + z * z >= threshold * threshold)
     {
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
