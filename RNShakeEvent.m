@@ -94,10 +94,6 @@ RCT_EXPORT_MODULE();
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
                                                     body:nil];
     }
-    if([self->_motionManager isAccelerometerActive] == YES)
-    {
-        [self->_motionManager stopAccelerometerUpdates];
-    }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if([self->_motionManager isAccelerometerActive] == YES)
         {
@@ -169,10 +165,6 @@ RCT_EXPORT_MODULE();
     {
         [_bridge.eventDispatcher sendDeviceEventWithName:@"ShakeEvent"
                                                     body:nil];
-    }
-    if([self->_motionManager isAccelerometerActive] == YES)
-    {
-        [self->_motionManager stopAccelerometerUpdates];
     }
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, 2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
         if([self->_motionManager isAccelerometerActive] == YES)
